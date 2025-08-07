@@ -1,0 +1,169 @@
+{
+  "movies": [
+    {
+      "id": "1",
+      "title": "The Shawshank Redemption",
+      "genre": [
+        "Drama"
+      ],
+      "rating": "R",
+      "duration": 142,
+      "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "1994-10-14"
+    },
+    {
+      "id": "2",
+      "title": "The Godfather",
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "rating": "R",
+      "duration": 175,
+      "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "1972-03-24"
+    },
+    {
+      "id": "3",
+      "title": "The Dark Knight",
+      "genre": [
+        "Action",
+        "Crime",
+        "Drama"
+      ],
+      "rating": "PG-13",
+      "duration": 152,
+      "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "2008-07-18"
+    },
+    {
+      "id": "4",
+      "title": "Inception",
+      "genre": [
+        "Action",
+        "Sci-Fi",
+        "Thriller"
+      ],
+      "rating": "PG-13",
+      "duration": 148,
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "2010-07-16"
+    },
+    {
+      "id": "5",
+      "title": "Pulp Fiction",
+      "genre": [
+        "Crime",
+        "Drama"
+      ],
+      "rating": "R",
+      "duration": 154,
+      "description": "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "1994-10-14"
+    },
+    {
+      "id": "6",
+      "title": "Forrest Gump",
+      "genre": [
+        "Drama",
+        "Romance"
+      ],
+      "rating": "PG-13",
+      "duration": 142,
+      "description": "The presidencies of Kennedy and Johnson, Vietnam, Watergate, and other history unfold through the perspective of an Alabama man with a low IQ.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "1994-07-06"
+    },
+    {
+      "id": "7",
+      "title": "Fight Club",
+      "genre": [
+        "Drama"
+      ],
+      "rating": "R",
+      "duration": 139,
+      "description": "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into something much more.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "1999-10-15"
+    },
+    {
+      "id": "8",
+      "title": "The Lord of the Rings: The Return of the King",
+      "genre": [
+        "Adventure",
+        "Drama",
+        "Fantasy"
+      ],
+      "rating": "PG-13",
+      "duration": 201,
+      "description": "Gandalf and Aragorn lead the World of Men against Sauron's army to draw his gaze from Frodo and Sam as they approach Mount Doom with the One Ring.",
+      "poster": "/placeholder.svg?height=400&width=300",
+      "releaseDate": "2003-12-17"
+    }
+  ],
+  "theaters": [
+    {
+      "id": "1",
+      "name": "Yes Planet Cinema",
+      "location": "Moshe Yatom, Rishon Lezion"
+    },
+    {
+      "id": "2",
+      "name": "Yes Planet VIP Cinema",
+      "location": "Glilot Center"
+    },
+    {
+      "id": "3",
+      "name": "Hot Cinema",
+      "location": "Rehovot Mall"
+    }
+  ],
+  "showtimes": [
+    {
+      "id": "1",
+      "movieId": "1",
+      "theaterId": "1",
+      "startTime": "2025-08-15T14:00:00",
+      "endTime": "2025-08-15T16:22:00",
+      "price": 12.99,
+      "availableSeats": 45,
+      "totalSeats": 100
+    },
+    {
+      "id": "2",
+      "movieId": "1",
+      "theaterId": "1",
+      "startTime": "2025-08-15T19:30:00",
+      "endTime": "2025-08-15T21:52:00",
+      "price": 15.99,
+      "availableSeats": 23,
+      "totalSeats": 100
+    },
+    {
+      "id": "3",
+      "movieId": "4",
+      "theaterId": "2",
+      "startTime": "2025-08-15T16:00:00",
+      "endTime": "2025-08-15T18:28:00",
+      "price": 13.99,
+      "availableSeats": 67,
+      "totalSeats": 120
+    },
+    {
+      "id": "4",
+      "movieId": "3",
+      "theaterId": "3",
+      "startTime": "2025-08-15T20:00:00",
+      "endTime": "2025-08-15T22:32:00",
+      "price": 14.99,
+      "availableSeats": 0,
+      "totalSeats": 150
+    }
+  ],
+  "seats": []
+}
