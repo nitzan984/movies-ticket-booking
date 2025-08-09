@@ -15,6 +15,7 @@ import {
   updateSeatAvailability,
 } from "../store/slices/bookingSlice";
 import { CheckCircle, Calendar, Clock, MapPin, Ticket } from "lucide-react";
+import { toast } from "sonner";
 
 const BookingConfirmationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ const BookingConfirmationPage: React.FC = () => {
         })
       );      
     } catch (error) {
-      console.error("Error updating seat availability:", error);
+      toast.error(`Error updating seat availability: ${error}`);
     }
   };
 

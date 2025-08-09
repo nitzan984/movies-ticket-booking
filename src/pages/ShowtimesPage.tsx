@@ -9,6 +9,7 @@ import { setSelectedMovie } from '../store/slices/bookingSlice';
 import { type Movie, type Showtime, type Theater } from '../types'; // Import types
 import placeholderImage from "../assets/placeholder.svg";
 import { ArrowLeft, Calendar, Clock, Star, AlertCircle } from 'lucide-react'; // Added AlertCircle
+import { toast } from 'sonner';
 
 const ShowtimesPage: React.FC = () => {
   const { movieId } = useParams<{ movieId: string }>();
@@ -64,7 +65,8 @@ const ShowtimesPage: React.FC = () => {
         } else {
           setError('Failed to fetch showtime data');
         }
-        console.error('Error fetching showtime data:', err);
+        
+        toast.error(`Error fetching showtime data: ${error}`);
       } finally {
         setLoading(false);
       }

@@ -8,6 +8,7 @@ import { type AppDispatch, type RootState } from '../store';
 import { clearSelection, resetBooking, setSelectedMovie, setSelectedShowtime } from '../store/slices/bookingSlice';
 import { AlertCircle, ArrowLeft, ShoppingCart } from 'lucide-react';
 import { initializeSeatsForShowtime, updateSeatAvailability, selectSeatsByShowtimeId } from '../store/slices/seatsSlice';
+import { toast } from 'sonner';
 
 const SeatSelectionPage: React.FC = () => {
   const { showtimeId } = useParams<{ showtimeId: string }>();
@@ -65,7 +66,7 @@ const SeatSelectionPage: React.FC = () => {
           initializationRef.current = showtimeId;
           dispatch(initializeSeatsForShowtime(showtimeId));
         } catch (error) {
-          console.error('Failed to fetch missing data:', error);
+          toast.error(`Failed to fetch missing data: ${error}`);
           navigate('/');
         }
       } else {
@@ -94,9 +95,8 @@ const SeatSelectionPage: React.FC = () => {
       // Wait for all seat availability updates to complete
       await Promise.all(updatePromises);
       navigate('/booking/confirmation');
-    } catch (err) {
-      console.error("Failed to update seat availability:", err);
-      alert("Failed to book seats. Please try again.");      
+    } catch (error) {            
+      toast.error(`Failed to book seats. Please try again. ${error}`);
       // Re-fetch seats to revert optimistic updates and show current state
       dispatch(initializeSeatsForShowtime(showtimeId!)); 
     }

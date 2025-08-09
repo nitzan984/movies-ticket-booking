@@ -7,8 +7,11 @@ import SeatSelectionPage from "./pages/SeatSelectionPage";
 import BookingConfirmationPage from "./pages/BookingConfirmationPage";
 import "./index.css";
 import { Film, Popcorn, Projector } from "lucide-react";
+import { Toaster } from 'sonner';
 
-function App() {
+
+function App() {  
+  
   return (
     <Provider store={store}>
       <Router>
@@ -46,6 +49,7 @@ function App() {
           </main>
           
         </div>
+        <Toaster richColors position="bottom-right" />
       </Router>
     </Provider>
   );
