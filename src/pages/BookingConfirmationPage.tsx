@@ -1,32 +1,73 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
-import { type RootState } from '../store';
-import { resetBooking } from '../store/slices/bookingSlice';
-import { CheckCircle, Calendar, Clock, MapPin, Ticket } from 'lucide-react';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "../components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import { type RootState } from "../store";
+import {
+  resetBooking,
+  updateSeatAvailability,
+} from "../store/slices/bookingSlice";
+import { CheckCircle, Calendar, Clock, MapPin, Ticket } from "lucide-react";
 
 const BookingConfirmationPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  const { selectedMovie, selectedShowtime, selectedSeats, totalPrice } = useSelector(
-    (state: RootState) => state.booking
-  );
 
-  React.useEffect(() => {
+  const { selectedMovie, selectedShowtime, selectedSeats, totalPrice } =
+    useSelector((state: RootState) => state.booking);
+
+  useEffect(() => {
     if (!selectedMovie || !selectedShowtime || selectedSeats.length === 0) {
-      navigate('/');
+      navigate("/");
     }
   }, [selectedMovie, selectedShowtime, selectedSeats, navigate]);
 
+  const sendAvailableSeatsUpdate = async () => {
+    if (!selectedShowtime || selectedSeats.length === 0) return;
+    const availableSeats =
+      selectedShowtime.availableSeats - selectedSeats.length;
+    try {
+      const response = await fetch(
+        `http://localhost:3001/showtimes/${selectedShowtime.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: selectedShowtime.id,
+            availableSeats: availableSeats,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update seat availability");
+      }
+      dispatch(
+        updateSeatAvailability({
+          showtimeId: selectedShowtime.id,
+          availableSeats,
+        })
+      );      
+    } catch (error) {
+      console.error("Error updating seat availability:", error);
+    }
+  };
+
   const handleConfirmBooking = () => {
-    // In a real app, this would make an API call to confirm the booking
-    alert('Booking confirmed! You will receive a confirmation email shortly.');
+    sendAvailableSeatsUpdate();
+
+    alert("Booking confirmed! You will receive a confirmation email shortly.");
     dispatch(resetBooking());
-    navigate('/');
+    navigate("/");
   };
 
   // const handleBackToMovies = () => {
@@ -45,19 +86,19 @@ const BookingConfirmationPage: React.FC = () => {
   }
 
   const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('en-US', {
-      hour: 'numeric',
-      minute: '2-digit',
+    return new Date(dateString).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
       hour12: true,
     });
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    return new Date(dateString).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -83,7 +124,6 @@ const BookingConfirmationPage: React.FC = () => {
         <CardContent className="space-y-6">
           {/* Movie Info */}
           <div className="flex gap-4">
-            
             <div className="flex-1">
               <h3 className="font-bold text-lg">{selectedMovie.title}</h3>
               <div className="flex flex-wrap gap-1 mt-1 mb-2">
@@ -93,7 +133,9 @@ const BookingConfirmationPage: React.FC = () => {
                   </Badge>
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground">{selectedMovie.rating} • {selectedMovie.duration} min</p>
+              <p className="text-sm text-muted-foreground">
+                {selectedMovie.rating} • {selectedMovie.duration} min
+              </p>
             </div>
           </div>
 
@@ -118,8 +160,14 @@ const BookingConfirmationPage: React.FC = () => {
             <h4 className="font-medium mb-2">Selected Seats</h4>
             <div className="grid grid-cols-2 gap-2">
               {selectedSeats.map((seat) => (
-                <div key={seat.id} className="flex justify-between p-2 bg-muted rounded text-sm">
-                  <span>Seat {seat.row}{seat.number}</span>
+                <div
+                  key={seat.id}
+                  className="flex justify-between p-2 bg-muted rounded text-sm"
+                >
+                  <span>
+                    Seat {seat.row}
+                    {seat.number}
+                  </span>
                   <span>${seat.price.toFixed(2)}</span>
                 </div>
               ))}
@@ -153,17 +201,18 @@ const BookingConfirmationPage: React.FC = () => {
         >
           Back to Seat Selection
         </Button>
-        <Button
-          onClick={handleConfirmBooking}
-          className="flex-1"
-        >
+        <Button onClick={handleConfirmBooking} className="flex-1">
           Confirm Booking
         </Button>
       </div>
 
       <div className="mt-6 text-center text-sm text-muted-foreground">
-        <p>By confirming this booking, you agree to our terms and conditions.</p>
-        <p>A confirmation email will be sent to your registered email address.</p>
+        <p>
+          By confirming this booking, you agree to our terms and conditions.
+        </p>
+        <p>
+          A confirmation email will be sent to your registered email address.
+        </p>
       </div>
     </div>
   );

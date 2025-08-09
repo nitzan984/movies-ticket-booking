@@ -1,5 +1,10 @@
-import { createSlice,type PayloadAction } from '@reduxjs/toolkit';
-import { type Movie,type Showtime,type Seat,type BookingState } from '../../types';
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import {
+  type Movie,
+  type Showtime,
+  type Seat,
+  type BookingState,
+} from "../../types";
 
 const initialState: BookingState = {
   selectedMovie: null,
@@ -9,7 +14,7 @@ const initialState: BookingState = {
 };
 
 const bookingSlice = createSlice({
-  name: 'booking',
+  name: "booking",
   initialState,
   reducers: {
     setSelectedMovie: (state, action: PayloadAction<Movie>) => {
@@ -20,15 +25,32 @@ const bookingSlice = createSlice({
     },
     toggleSeatSelection: (state, action: PayloadAction<Seat>) => {
       const seat = action.payload;
-      const existingIndex = state.selectedSeats.findIndex(s => s.id === seat.id);
-      
+      const existingIndex = state.selectedSeats.findIndex(
+        (s) => s.id === seat.id
+      );
+
       if (existingIndex >= 0) {
         state.selectedSeats.splice(existingIndex, 1);
       } else {
         state.selectedSeats.push({ ...seat, isSelected: true });
       }
-      
-      state.totalPrice = state.selectedSeats.reduce((total, seat) => total + seat.price, 0);
+
+      state.totalPrice = state.selectedSeats.reduce(
+        (total, seat) => total + seat.price,
+        0
+      );
+    },
+    updateSeatAvailability: (
+      state,
+      action: PayloadAction<{ showtimeId: string; availableSeats: number }>
+    ) => {
+      const { showtimeId, availableSeats } = action.payload;
+      if (state.selectedShowtime?.id === showtimeId) {
+        state.selectedShowtime = {
+          ...state.selectedShowtime,
+          availableSeats,
+        };
+      }
     },
     clearSelection: (state) => {
       state.selectedSeats = [];
@@ -46,6 +68,7 @@ const bookingSlice = createSlice({
 export const {
   setSelectedMovie,
   setSelectedShowtime,
+  updateSeatAvailability,
   toggleSeatSelection,
   clearSelection,
   resetBooking,

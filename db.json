@@ -131,8 +131,15 @@
       "startTime": "2025-08-15T14:00:00",
       "endTime": "2025-08-15T16:22:00",
       "price": 12.99,
-      "availableSeats": 45,
-      "totalSeats": 100
+      "seatsPerRow": 10,
+      "rows": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "availableSeats": 34,
+      "totalSeats": 40
     },
     {
       "id": "2",
@@ -141,8 +148,17 @@
       "startTime": "2025-08-15T19:30:00",
       "endTime": "2025-08-15T21:52:00",
       "price": 15.99,
-      "availableSeats": 23,
-      "totalSeats": 100
+      "seatsPerRow": 10,
+      "rows": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "availableSeats": 60,
+      "totalSeats": 60
     },
     {
       "id": "3",
@@ -151,8 +167,16 @@
       "startTime": "2025-08-15T16:00:00",
       "endTime": "2025-08-15T18:28:00",
       "price": 13.99,
-      "availableSeats": 67,
-      "totalSeats": 120
+      "seatsPerRow": 10,
+      "rows": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "availableSeats": 42,
+      "totalSeats": 50
     },
     {
       "id": "4",
@@ -161,9 +185,416 @@
       "startTime": "2025-08-15T20:00:00",
       "endTime": "2025-08-15T22:32:00",
       "price": 14.99,
-      "availableSeats": 0,
-      "totalSeats": 150
+      "seatsPerRow": 10,
+      "rows": [
+        "A",
+        "B",
+        "C"
+      ],
+      "availableSeats": 30,
+      "totalSeats": 30
     }
   ],
-  "seats": []
+  "seats": [
+    {
+      "id": "1-A1",
+      "row": "A",
+      "number": 1,
+      "isAvailable": false,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A2",
+      "row": "A",
+      "number": 2,
+      "isAvailable": false,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A3",
+      "row": "A",
+      "number": 3,
+      "isAvailable": false,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A4",
+      "row": "A",
+      "number": 4,
+      "isAvailable": false,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A5",
+      "row": "A",
+      "number": 5,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A6",
+      "row": "A",
+      "number": 6,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A7",
+      "row": "A",
+      "number": 7,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A8",
+      "row": "A",
+      "number": 8,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A10",
+      "row": "A",
+      "number": 10,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-A9",
+      "row": "A",
+      "number": 9,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B1",
+      "row": "B",
+      "number": 1,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B2",
+      "row": "B",
+      "number": 2,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B3",
+      "row": "B",
+      "number": 3,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B4",
+      "row": "B",
+      "number": 4,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B5",
+      "row": "B",
+      "number": 5,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B6",
+      "row": "B",
+      "number": 6,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B7",
+      "row": "B",
+      "number": 7,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B8",
+      "row": "B",
+      "number": 8,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B9",
+      "row": "B",
+      "number": 9,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-B10",
+      "row": "B",
+      "number": 10,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "premium",
+      "price": 18.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C1",
+      "row": "C",
+      "number": 1,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C2",
+      "row": "C",
+      "number": 2,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C3",
+      "row": "C",
+      "number": 3,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C4",
+      "row": "C",
+      "number": 4,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C5",
+      "row": "C",
+      "number": 5,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C6",
+      "row": "C",
+      "number": 6,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C7",
+      "row": "C",
+      "number": 7,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C8",
+      "row": "C",
+      "number": 8,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C9",
+      "row": "C",
+      "number": 9,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-C10",
+      "row": "C",
+      "number": 10,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D1",
+      "row": "D",
+      "number": 1,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D2",
+      "row": "D",
+      "number": 2,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D3",
+      "row": "D",
+      "number": 3,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D4",
+      "row": "D",
+      "number": 4,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D5",
+      "row": "D",
+      "number": 5,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D6",
+      "row": "D",
+      "number": 6,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D7",
+      "row": "D",
+      "number": 7,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D8",
+      "row": "D",
+      "number": 8,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D9",
+      "row": "D",
+      "number": 9,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    },
+    {
+      "id": "1-D10",
+      "row": "D",
+      "number": 10,
+      "isAvailable": true,
+      "isSelected": false,
+      "type": "regular",
+      "price": 12.99,
+      "showtimeId": "1"
+    }
+  ]
 }

@@ -7,7 +7,7 @@ import SeatMap from '../components/SeatMap';
 import { type AppDispatch, type RootState } from '../store';
 import { clearSelection, resetBooking, setSelectedMovie, setSelectedShowtime } from '../store/slices/bookingSlice';
 import { AlertCircle, ArrowLeft, ShoppingCart } from 'lucide-react';
-import { initializeSeatsForShowtime, updateSeatAvailability } from '../store/slices/seatsSlice';
+import { initializeSeatsForShowtime, updateSeatAvailability, selectSeatsByShowtimeId } from '../store/slices/seatsSlice';
 
 const SeatSelectionPage: React.FC = () => {
   const { showtimeId } = useParams<{ showtimeId: string }>();
@@ -16,7 +16,6 @@ const SeatSelectionPage: React.FC = () => {
   // Create a ref to track which showtime is currently being initialized to prevent duplicates
   const initializationRef = useRef<string | null>(null);
   
-  
   const { 
     selectedMovie,     
     selectedShowtime,  
@@ -24,7 +23,8 @@ const SeatSelectionPage: React.FC = () => {
     totalPrice         
   } = useSelector((state: RootState) => state.booking);
   
-  const { seats, loading, error } = useSelector((state: RootState) => state.seats);
+  const { loading, error } = useSelector((state: RootState) => state.seats);
+  const seats = useSelector((state: RootState) => showtimeId ? selectSeatsByShowtimeId(state, showtimeId) : []);
 
   useEffect(() => {
     const fetchMissingData = async () => {
@@ -82,7 +82,6 @@ const SeatSelectionPage: React.FC = () => {
 
   // Handler function for proceeding to booking confirmation
   const handleProceedToBooking = async () => {
-    // Exit early if no seats are selected
     if (selectedSeats.length === 0) return;
 
     // Create array of promises to update seat availability in parallel
@@ -94,10 +93,8 @@ const SeatSelectionPage: React.FC = () => {
     try {
       // Wait for all seat availability updates to complete
       await Promise.all(updatePromises);
-      // If all updates successful, navigate to confirmation page
       navigate('/booking/confirmation');
     } catch (err) {
-      // If any update fails, log error and show user-friendly message
       console.error("Failed to update seat availability:", err);
       alert("Failed to book seats. Please try again.");      
       // Re-fetch seats to revert optimistic updates and show current state
@@ -105,9 +102,7 @@ const SeatSelectionPage: React.FC = () => {
     }
   };
 
-  // Handler function to clear all selected seats
   const handleClearSelection = () => {
-    // Dispatch Redux action to reset selected seats array and total price
     dispatch(clearSelection());
   };
 
@@ -158,7 +153,7 @@ const SeatSelectionPage: React.FC = () => {
     );
   }
 
-  // Utility function to format time string for display
+
   const formatTime = (dateString: string) => {
     // Convert ISO date string to localized time format (e.g., "2:30 PM")
     return new Date(dateString).toLocaleTimeString('en-US', {
@@ -168,7 +163,6 @@ const SeatSelectionPage: React.FC = () => {
     });
   };
 
-  // Utility function to format date string for display
   const formatDate = (dateString: string) => {
     // Convert ISO date string to localized date format (e.g., "Monday, August 7, 2025")
     return new Date(dateString).toLocaleDateString('en-US', {

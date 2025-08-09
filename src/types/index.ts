@@ -22,6 +22,8 @@ export interface Showtime {
   startTime: string;
   endTime: string;
   price: number;
+  seatsPerRow: number;
+  rows: string[];
   availableSeats: number;
   totalSeats: number;
 }

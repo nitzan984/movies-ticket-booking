@@ -130,7 +130,7 @@ describe('SeatSelectionPage', () => {
   describe('Loading States', () => {
     it('shows loading state when seats are loading', () => {
       const initialState = {
-        seats: { seats: [], loading: true, error: null, currentShowtimeId: null },
+        seats: { seatsByShowtime: {}, loading: true, error: null, currentShowtimeId: null },
         booking: { selectedMovie: null, selectedShowtime: null, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -143,7 +143,7 @@ describe('SeatSelectionPage', () => {
   describe('Error States', () => {
     it('shows error state when there is an error loading seats', () => {
       const initialState = {
-        seats: { seats: [], loading: false, error: 'Failed to load seats', currentShowtimeId: null },
+        seats: { seatsByShowtime: {}, loading: false, error: 'Failed to load seats', currentShowtimeId: null },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -156,7 +156,7 @@ describe('SeatSelectionPage', () => {
 
     it('shows no seats found state when seats array is empty', () => {
       const initialState = {
-        seats: { seats: [], loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: {}, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -186,7 +186,7 @@ describe('SeatSelectionPage', () => {
       // This test verifies the component handles the missing data scenario gracefully
       // In practice, this would happen when navigating directly to a seat selection URL
       const initialState = {
-        seats: { seats: [], loading: false, error: null, currentShowtimeId: null },
+        seats: { seatsByShowtime: {}, loading: false, error: null, currentShowtimeId: null },
         booking: { selectedMovie: null, selectedShowtime: null, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -217,7 +217,7 @@ describe('SeatSelectionPage', () => {
       mockFetch.mockRejectedValueOnce(new Error('Network error'));
 
       const initialState = {
-        seats: { seats: [], loading: false, error: null, currentShowtimeId: null },
+        seats: { seatsByShowtime: {}, loading: false, error: null, currentShowtimeId: null },
         booking: { selectedMovie: null, selectedShowtime: null, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -235,7 +235,7 @@ describe('SeatSelectionPage', () => {
       } as Response);
 
       const initialState = {
-        seats: { seats: [], loading: false, error: null, currentShowtimeId: null },
+        seats: { seatsByShowtime: {}, loading: false, error: null, currentShowtimeId: null },
         booking: { selectedMovie: null, selectedShowtime: null, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -250,7 +250,7 @@ describe('SeatSelectionPage', () => {
   describe('Component Rendering', () => {
     it('renders seat selection page with movie and showtime data', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -264,7 +264,7 @@ describe('SeatSelectionPage', () => {
 
     it('displays formatted date and time', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -281,7 +281,7 @@ describe('SeatSelectionPage', () => {
 
     it('renders seat map component', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -301,7 +301,7 @@ describe('SeatSelectionPage', () => {
   describe('Navigation', () => {
     it('navigates back when Back to Showtimes button is clicked', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -317,7 +317,7 @@ describe('SeatSelectionPage', () => {
   describe('Seat Selection', () => {
     it('shows proceed button as disabled when no seats are selected', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -330,7 +330,7 @@ describe('SeatSelectionPage', () => {
     it('shows selected seats in booking summary', () => {
       const selectedSeats = [mockSeats[0]];
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { 
           selectedMovie: mockMovie, 
           selectedShowtime: mockShowtime, 
@@ -350,7 +350,7 @@ describe('SeatSelectionPage', () => {
     it('shows clear selection button when seats are selected', () => {
       const selectedSeats = [mockSeats[0]];
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { 
           selectedMovie: mockMovie, 
           selectedShowtime: mockShowtime, 
@@ -368,7 +368,7 @@ describe('SeatSelectionPage', () => {
     it('calculates total price correctly with multiple seats', () => {
       const selectedSeats = [mockSeats[0], mockSeats[1]]; // Two premium seats at $18.99 each
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { 
           selectedMovie: mockMovie, 
           selectedShowtime: mockShowtime, 
@@ -394,7 +394,7 @@ describe('SeatSelectionPage', () => {
 
       const selectedSeats = [mockSeats[0]];
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { 
           selectedMovie: mockMovie, 
           selectedShowtime: mockShowtime, 
@@ -421,7 +421,7 @@ describe('SeatSelectionPage', () => {
       // Let's simplify and just verify the component handles the error case gracefully
       const selectedSeats = [mockSeats[0]];
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { 
           selectedMovie: mockMovie, 
           selectedShowtime: mockShowtime, 
@@ -451,7 +451,7 @@ describe('SeatSelectionPage', () => {
 
     it('does not proceed when no seats are selected', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -467,7 +467,7 @@ describe('SeatSelectionPage', () => {
   describe('Edge Cases', () => {
     it('handles missing showtimeId parameter', () => {
       const initialState = {
-        seats: { seats: [], loading: false, error: null, currentShowtimeId: null },
+        seats: { seatsByShowtime: {}, loading: false, error: null, currentShowtimeId: null },
         booking: { selectedMovie: null, selectedShowtime: null, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -482,7 +482,7 @@ describe('SeatSelectionPage', () => {
 
     it('displays help text for seat selection', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 
@@ -495,7 +495,7 @@ describe('SeatSelectionPage', () => {
 
     it('handles component unmounting gracefully', () => {
       const initialState = {
-        seats: { seats: mockSeats, loading: false, error: null, currentShowtimeId: 'showtime-1' },
+        seats: { seatsByShowtime: { 'showtime-1': mockSeats }, loading: false, error: null, currentShowtimeId: 'showtime-1' },
         booking: { selectedMovie: mockMovie, selectedShowtime: mockShowtime, selectedSeats: [], totalPrice: 0 },
       };
 

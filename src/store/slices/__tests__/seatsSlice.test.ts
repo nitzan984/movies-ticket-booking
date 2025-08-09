@@ -72,7 +72,7 @@ describe('seatsSlice', () => {
       const state = store.getState().seats;
 
       expect(state).toEqual({
-        seats: [],
+        seatsByShowtime: {},
         loading: false,
         error: null,
         currentShowtimeId: null,
@@ -84,7 +84,7 @@ describe('seatsSlice', () => {
     it('should clear seats and reset error', () => {
       const store = createTestStore({
         seats: {
-          seats: mockSeats,
+          seatsByShowtime: { 'showtime-1': mockSeats },
           loading: false,
           error: 'Some error',
           currentShowtimeId: 'showtime-1',
@@ -94,9 +94,9 @@ describe('seatsSlice', () => {
       store.dispatch(clearSeats());
 
       const state = store.getState().seats;
-      expect(state.seats).toEqual([]);
+      expect(state.seatsByShowtime).toEqual({});
       expect(state.error).toBeNull();
-      expect(state.currentShowtimeId).toBe('showtime-1'); // Should not clear current showtime
+      expect(state.currentShowtimeId).toBeNull(); // Should clear current showtime
     });
   });
 
@@ -170,7 +170,7 @@ describe('seatsSlice', () => {
 
       const state = store.getState().seats;
       expect(state.loading).toBe(false);
-      expect(state.seats).toEqual(mockSeats);
+      expect(state.seatsByShowtime['showtime-1']).toEqual(mockSeats);
       expect(state.error).toBeNull();
     });
 
@@ -189,7 +189,7 @@ describe('seatsSlice', () => {
 
       const state = store.getState().seats;
       expect(state.loading).toBe(false);
-      expect(state.seats).toEqual([]);
+      expect(state.seatsByShowtime['showtime-1']).toEqual([]);
       expect(state.error).toBe('Server error: Not Found');
     });
 
@@ -230,7 +230,7 @@ describe('seatsSlice', () => {
 
       const store = createTestStore({
         seats: {
-          seats: mockSeats,
+          seatsByShowtime: { 'showtime-1': mockSeats },
           loading: false,
           error: null,
           currentShowtimeId: 'showtime-1',
@@ -255,7 +255,7 @@ describe('seatsSlice', () => {
       expect(result.payload).toEqual(updatedSeat);
 
       const state = store.getState().seats;
-      const updatedSeatInState = state.seats.find(seat => seat.id === 'showtime-1-A1');
+      const updatedSeatInState = state.seatsByShowtime['showtime-1']?.find(seat => seat.id === 'showtime-1-A1');
       expect(updatedSeatInState?.isAvailable).toBe(false);
     });
 
@@ -268,7 +268,7 @@ describe('seatsSlice', () => {
 
       const store = createTestStore({
         seats: {
-          seats: mockSeats,
+          seatsByShowtime: { 'showtime-1': mockSeats },
           loading: false,
           error: null,
           currentShowtimeId: 'showtime-1',
@@ -285,7 +285,7 @@ describe('seatsSlice', () => {
 
       // State should remain unchanged
       const state = store.getState().seats;
-      expect(state.seats).toEqual(mockSeats);
+      expect(state.seatsByShowtime['showtime-1']).toEqual(mockSeats);
     });
 
     it('should handle network error in update', async () => {
@@ -293,7 +293,7 @@ describe('seatsSlice', () => {
 
       const store = createTestStore({
         seats: {
-          seats: mockSeats,
+          seatsByShowtime: { 'showtime-1': mockSeats },
           loading: false,
           error: null,
           currentShowtimeId: 'showtime-1',
@@ -329,7 +329,7 @@ describe('seatsSlice', () => {
 
       const store = createTestStore({
         seats: {
-          seats: mockSeats,
+          seatsByShowtime: { 'showtime-1': mockSeats },
           loading: false,
           error: null,
           currentShowtimeId: 'showtime-1',
@@ -343,7 +343,7 @@ describe('seatsSlice', () => {
 
       const state = store.getState().seats;
       // Original seats should be unchanged since the updated seat ID doesn't exist
-      expect(state.seats).toEqual(mockSeats);
+      expect(state.seatsByShowtime['showtime-1']).toEqual(mockSeats);
     });
   });
 
@@ -351,7 +351,7 @@ describe('seatsSlice', () => {
     it('should return existing seats if already loaded for showtime', async () => {
       const store = createTestStore({
         seats: {
-          seats: mockSeats,
+          seatsByShowtime: { 'showtime-1': mockSeats },
           loading: false,
           error: null,
           currentShowtimeId: 'showtime-1',
@@ -382,7 +382,7 @@ describe('seatsSlice', () => {
       expect(result.payload).toEqual(mockSeats);
 
       const state = store.getState().seats;
-      expect(state.seats).toEqual(mockSeats);
+      expect(state.seatsByShowtime['showtime-1']).toEqual(mockSeats);
       expect(state.currentShowtimeId).toBe('showtime-1');
     });
 
@@ -477,7 +477,7 @@ describe('seatsSlice', () => {
     it('should handle multiple rapid initialization calls', async () => {
       const store = createTestStore({
         seats: {
-          seats: mockSeats,
+          seatsByShowtime: { 'showtime-1': mockSeats },
           loading: false,
           error: null,
           currentShowtimeId: 'showtime-1',
@@ -535,7 +535,7 @@ describe('seatsSlice', () => {
 
       // Initialize for first showtime
       await store.dispatch(initializeSeatsForShowtime('showtime-1'));
-      expect(store.getState().seats.seats).toEqual(mockSeats);
+      expect(store.getState().seats.seatsByShowtime['showtime-1']).toEqual(mockSeats);
       expect(store.getState().seats.currentShowtimeId).toBe('showtime-1');
 
       // Initialize for different showtime - should fetch new data since showtimes are different
@@ -551,12 +551,12 @@ describe('seatsSlice', () => {
       
       // The seats should be updated to the new showtime seats (if the fetch occurred)
       // If the seats are still the old ones, it means the early return happened
-      if (finalState.seats === mockSeats) {
+      if (finalState.seatsByShowtime['showtime-1'] && finalState.seatsByShowtime['showtime-1'].length > 0 && !finalState.seatsByShowtime['showtime-2']) {
         // Early return occurred - this is valid behavior in current implementation
         expect(mockFetch).toHaveBeenCalledTimes(1);
       } else {
         // New fetch occurred
-        expect(finalState.seats).toEqual(mockSeats2);
+        expect(finalState.seatsByShowtime['showtime-2']).toEqual(mockSeats2);
         expect(mockFetch).toHaveBeenCalledTimes(2);
       }
     });
@@ -577,9 +577,9 @@ describe('seatsSlice', () => {
       store.dispatch(clearSeats());
       
       let state = store.getState().seats;
-      expect(state.seats).toEqual([]);
+      expect(state.seatsByShowtime).toEqual({});
       expect(state.error).toBeNull();
-      expect(state.currentShowtimeId).toBe('showtime-1'); // Should persist
+      expect(state.currentShowtimeId).toBeNull(); // Should clear showtime
 
       // Update seat availability should handle empty seats gracefully
       const updateResponse = {
@@ -595,7 +595,7 @@ describe('seatsSlice', () => {
 
       state = store.getState().seats;
       // Since seats array was empty, the updated seat won't be added
-      expect(state.seats).toEqual([]);
+      expect(state.seatsByShowtime).toEqual({});
     });
   });
 });
