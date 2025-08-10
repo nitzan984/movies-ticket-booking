@@ -73,7 +73,7 @@ const ShowtimesPage: React.FC = () => {
     };
 
     fetchShowtimeData();
-  }, [movieId, dispatch, navigate]);
+  }, [movieId, dispatch, navigate, error]);
 
   if (loading) {
     return (

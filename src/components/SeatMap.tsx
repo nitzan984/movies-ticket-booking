@@ -33,6 +33,15 @@ const SeatMap: React.FC<SeatMapProps> = ({ seats }) => {
     }
   };
 
+  // Ensure seats is an array
+  if (!Array.isArray(seats)) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">No seats available</p>
+      </div>
+    );
+  }
+
   // Group seats by row
   const seatsByRow = seats.reduce((acc, seat) => {
     if (!acc[seat.row]) {
@@ -50,32 +59,39 @@ const SeatMap: React.FC<SeatMapProps> = ({ seats }) => {
         <p className="text-center text-sm text-muted-foreground">SCREEN</p>
       </div>
 
-      {/* Seat Map */}
-      <div className="space-y-3">
-        {Object.entries(seatsByRow).map(([row, rowSeats]) => (
-          <div key={row} className="flex items-center justify-center gap-2">
-            <div className="w-8 text-center font-medium text-sm">{row}</div>
-            <div className="flex gap-1">
-              {rowSeats.map((seat) => (
-                <Button
-                  key={seat.id}
-                  variant="outline"
-                  size="sm"
-                  className={cn(
-                    'w-8 h-8 p-0 text-xs border-2',
-                    getSeatColor(seat)
-                  )}
-                  onClick={() => handleSeatClick(seat)}
-                  disabled={!seat.isAvailable}
-                  title={`${seat.row}${seat.number} - ${seat.type} - $${seat.price}`}
-                >
-                  {seat.number}
-                </Button>
-              ))}
+      {/* Show message if no seats available */}
+      {seats.length === 0 ? (
+        <div className="text-center py-8">
+          <p className="text-muted-foreground">No seats available for this showtime</p>
+        </div>
+      ) : (
+        /* Seat Map */
+        <div className="space-y-3">
+          {Object.entries(seatsByRow).map(([row, rowSeats]) => (
+            <div key={row} className="flex items-center justify-center gap-2">
+              <div className="w-8 text-center font-medium text-sm">{row}</div>
+              <div className="flex gap-1">
+                {rowSeats.map((seat) => (
+                  <Button
+                    key={seat.id}
+                    variant="outline"
+                    size="sm"
+                    className={cn(
+                      'w-8 h-8 p-0 text-xs border-2',
+                      getSeatColor(seat)
+                    )}
+                    onClick={() => handleSeatClick(seat)}
+                    disabled={!seat.isAvailable}
+                    title={`${seat.row}${seat.number} - ${seat.type} - $${seat.price}`}
+                  >
+                    {seat.number}
+                  </Button>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Legend */}
       <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm">

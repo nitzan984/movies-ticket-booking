@@ -9,7 +9,7 @@ import seatsReducer, {
 } from '../seatsSlice';
 import moviesReducer from '../moviesSlice';
 import bookingReducer from '../bookingSlice';
-import { type Seat } from '../../../types';
+import { type Seat, type Showtime } from '../../../types';
 
 // Create test store helper - using full store structure to match RootState
 const createTestStore = (preloadedState = {}) => {
@@ -21,6 +21,20 @@ const createTestStore = (preloadedState = {}) => {
     },
     preloadedState,
   });
+};
+
+// Mock showtime data
+const mockShowtime: Showtime = {
+  id: 'test-showtime',
+  movieId: 'movie-1',
+  theaterId: 'theater-1',
+  startTime: '2025-08-15T19:00:00Z',
+  endTime: '2025-08-15T21:00:00Z',
+  price: 15.99,
+  seatsPerRow: 10,
+  rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
+  availableSeats: 80,
+  totalSeats: 80,
 };
 
 // Mock seat data
@@ -102,33 +116,30 @@ describe('seatsSlice', () => {
 
   describe('generateSeats function', () => {
     it('should generate correct number of seats', () => {
-      const showtimeId = 'test-showtime';
-      const seats = generateSeats(showtimeId);
+      const seats = generateSeats(mockShowtime);
 
       // 8 rows * 10 seats per row = 80 seats
       expect(seats).toHaveLength(80);
     });
 
     it('should generate seats with correct structure', () => {
-      const showtimeId = 'test-showtime';
-      const seats = generateSeats(showtimeId);
+      const seats = generateSeats(mockShowtime);
       const firstSeat = seats[0];
 
       expect(firstSeat).toEqual({
-        id: `${showtimeId}-A1`,
+        id: `${mockShowtime.id}-A1`,
         row: 'A',
         number: 1,
         isAvailable: expect.any(Boolean),
         isSelected: false,
         type: 'premium', // First row should be premium
         price: 18.99,
-        showtimeId,
+        showtimeId: mockShowtime.id,
       });
     });
 
     it('should generate seats with correct types and prices', () => {
-      const showtimeId = 'test-showtime';
-      const seats = generateSeats(showtimeId);
+      const seats = generateSeats(mockShowtime);
 
       // Check premium seats (rows A, B)
       const premiumSeats = seats.filter(seat => ['A', 'B'].includes(seat.row));
@@ -144,8 +155,7 @@ describe('seatsSlice', () => {
     });
 
     it('should generate seats with unique IDs', () => {
-      const showtimeId = 'test-showtime';
-      const seats = generateSeats(showtimeId);
+      const seats = generateSeats(mockShowtime);
       const seatIds = seats.map(seat => seat.id);
       const uniqueIds = new Set(seatIds);
 
@@ -403,7 +413,14 @@ describe('seatsSlice', () => {
         .mockResolvedValueOnce(emptyResponse as any) // fetchSeatsByShowtimeId call
         .mockResolvedValue(createdSeatResponse as any); // POST calls for creating seats
 
-      const store = createTestStore();
+      const store = createTestStore({
+        booking: {
+          selectedMovie: null,
+          selectedShowtime: mockShowtime,
+          selectedSeats: [],
+          totalPrice: 0,
+        },
+      });
       const result = await store.dispatch(initializeSeatsForShowtime('showtime-1'));
 
       expect(initializeSeatsForShowtime.fulfilled.match(result)).toBe(true);
@@ -436,7 +453,14 @@ describe('seatsSlice', () => {
         .mockResolvedValueOnce(emptyResponse as any)
         .mockResolvedValue(errorResponse as any);
 
-      const store = createTestStore();
+      const store = createTestStore({
+        booking: {
+          selectedMovie: null,
+          selectedShowtime: mockShowtime,
+          selectedSeats: [],
+          totalPrice: 0,
+        },
+      });
       const result = await store.dispatch(initializeSeatsForShowtime('showtime-1'));
 
       expect(initializeSeatsForShowtime.rejected.match(result)).toBe(true);

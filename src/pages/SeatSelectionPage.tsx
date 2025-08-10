@@ -24,11 +24,33 @@ const SeatSelectionPage: React.FC = () => {
     totalPrice         
   } = useSelector((state: RootState) => state.booking);
   
-  const { loading, error } = useSelector((state: RootState) => state.seats);
+  const { loading, error, currentShowtimeId } = useSelector((state: RootState) => state.seats);
   const seats = useSelector((state: RootState) => showtimeId ? selectSeatsByShowtimeId(state, showtimeId) : []);
 
   useEffect(() => {
     const fetchMissingData = async () => {
+      
+      // Navigate to home if showtimeId is missing
+      if (!showtimeId) {
+        navigate('/');
+        return;
+      }
+      
+      // Don't fetch data if we already have an error state
+      if (error) {
+        return;
+      }
+      
+      // Don't fetch data if we already have seats for this showtime
+      if (seats.length > 0 && selectedMovie && selectedShowtime) {
+        return;
+      }
+      
+      // If we have all required data (movie, showtime) but no seats, and the currentShowtimeId matches,
+      // then we're in a legitimate "no seats found" state and shouldn't try to fetch/initialize
+      if (selectedMovie && selectedShowtime && seats.length === 0 && currentShowtimeId === showtimeId) {
+        return;
+      }
       
       // Prevent duplicate initialization by checking if this showtime is already being processed
       if (initializationRef.current === showtimeId) {
@@ -37,11 +59,6 @@ const SeatSelectionPage: React.FC = () => {
       
       // Check if required movie or showtime data is missing from Redux state
       if (!selectedMovie || !selectedShowtime) {
-        
-        if (!showtimeId) {
-          navigate('/');
-          return;
-        }
         
         try {
           
@@ -79,7 +96,7 @@ const SeatSelectionPage: React.FC = () => {
     };
 
     fetchMissingData();
-  }, [selectedMovie, selectedShowtime, showtimeId, navigate, dispatch]);
+  }, [selectedMovie, selectedShowtime, showtimeId, navigate, dispatch, error, seats.length, currentShowtimeId]);
 
   // Handler function for proceeding to booking confirmation
   const handleProceedToBooking = async () => {
