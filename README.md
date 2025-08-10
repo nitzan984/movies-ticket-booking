@@ -119,32 +119,6 @@ src/
 -   \`npm run lint\` - Run ESLint
 -   \`npm run start:api\` - Start the mock JSON API server
 
-## Project Structure
-
-\`\`\`
-src/
-├── components/          # Reusable UI components
-│   ├── ui/             # shadcn/ui components
-│   ├── MovieCard.tsx   # Movie display component
-│   ├── MovieFilters.tsx # Search and filter component
-│   ├── SeatMap.tsx     # Interactive seat selection
-│   └── ShowtimeCard.tsx # Showtime display component
-├── pages/              # Page components
-│   ├── MoviesPage.tsx  # Main movies listing
-│   ├── ShowtimesPage.tsx # Movie showtimes
-│   ├── SeatSelectionPage.tsx # Seat selection
-│   └── BookingConfirmationPage.tsx # Booking confirmation
-├── store/              # Redux store configuration
-│   ├── slices/         # Redux slices
-│   │   ├── moviesSlice.ts # Manages movie data
-│   │   ├── bookingSlice.ts # Manages current booking selection
-│   │   └── seatsSlice.ts   # Manages seat availability data
-│   └── index.ts        # Store setup
-├── types/              # TypeScript type definitions
-├── data/               # (Removed generateSeats)
-├── lib/                # Utility functions
-└── __tests__/          # Test files
-```
 
 ## Testing Strategy
 
@@ -233,7 +207,6 @@ The application uses Redux Toolkit for state management with three main slices:
 
 The project includes unit tests for critical components:
 
-\`\`\`bash
 # Run all tests
 npm run test
 
@@ -283,17 +256,6 @@ Comprehensive error handling includes:
 -   Integration tests for Redux state management
 -   User interaction testing with React Testing Library
 -   Edge case and error scenario coverage
-
-
-## Contributing
-
-1.  Fork the repository
-2.  Create a feature branch
-3.  Make your changes
-4.  Add tests for new functionality (maintain test coverage)
-5.  Run the test suite: `npm run test`
-6.  Ensure tests pass and coverage is maintained
-7.  Submit a pull request
 
 ### Development Guidelines
 -   Follow TypeScript best practices
